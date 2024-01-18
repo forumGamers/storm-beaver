@@ -1,0 +1,48 @@
+syntax = "proto3";
+
+package post;
+
+message TimeLine {
+  string _id = 1;
+  string userId = 2;
+  string text = 3;
+  string imageUrl = 4;
+  string imageId = 5;
+  bool allowComment = 6;
+  string createdAt = 7;
+  string updatedAt = 8;
+  int64 countLike = 9;
+  int64 countComment = 10;
+  int64 countShare = 11;
+  bool isLiked = 12;
+  bool isShared = 13;
+  repeated string tags = 14;
+  PostMedia media = 15;
+  UserTimeLine User = 16;
+}
+
+message PostMedia {
+  string id = 1;
+  string type = 2;
+  string url = 3;
+}
+
+message UserTimeLine {
+  string id = 1;
+  string imageUrl = 2;
+  string UUID = 3;
+  string username = 4;
+  string bio = 5;
+  bool isFollowed = 6;
+  string backgroundImage = 7;
+} 
+
+message PostDataParams {
+  optional string userIds = 1;
+  optional string page = 2;
+  optional string limit = 3;
+}
+
+service PostService {
+  rpc GetTimeLine (PostDataParams) returns (TimeLine) {}
+}

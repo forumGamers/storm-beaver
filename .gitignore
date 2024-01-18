@@ -41,3 +41,9 @@ node_modules
 dist
 
 coverage
+
+/src/proto/*_pb.js
+
+/src/types/*_pb.d.ts
+
+volume

@@ -6,9 +6,8 @@ import { config } from "dotenv";
 config();
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule);
+  const app = await NestFactory.create(AppModule, { bodyParser: false });
   app.useLogger(app.get(WINSTON_MODULE_NEST_PROVIDER));
-  await app.startAllMicroservices();
 
   await app.listen(process.env.PORT ?? 5000);
 }

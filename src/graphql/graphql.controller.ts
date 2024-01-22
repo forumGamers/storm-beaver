@@ -38,6 +38,7 @@ export class GraphqlController implements OnModuleDestroy, OnModuleInit {
     };
     this.apolloServer = new ApolloServer<BaseContext>({
       schema,
+      introspection: process.env.NODE_ENV !== 'production',
       plugins: [
         {
           async requestDidStart(

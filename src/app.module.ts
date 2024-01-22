@@ -4,6 +4,7 @@ import * as winston from "winston";
 import { config } from "dotenv";
 import { ProducerService } from "./services/broker.service";
 import { GraphqlController } from "./graphql/graphql.controller";
+import { CacheModule } from "./cache/cache.module";
 
 config();
 
@@ -21,6 +22,7 @@ config();
         }),
       ],
     }),
+    CacheModule,
   ],
   providers: [ProducerService],
   controllers: [GraphqlController],

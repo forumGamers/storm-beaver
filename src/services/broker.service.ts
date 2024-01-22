@@ -1,8 +1,10 @@
 import amqp, { type ChannelWrapper } from 'amqp-connection-manager';
 import { Channel } from 'amqplib';
-import { Injectable, Logger } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
 import { config } from 'dotenv';
 import { BrokerQueue } from '../enum/broker.enum';
+import { WINSTON_MODULE_PROVIDER } from 'nest-winston';
+import { Logger } from 'winston';
 
 config();
 
@@ -28,7 +30,9 @@ export class ProducerService {
   protected userExchange = 'User-Exchanges';
   protected exchanges: string[] = [this.userExchange];
 
-  constructor(private readonly logger: Logger) {
+  constructor(
+    @Inject(WINSTON_MODULE_PROVIDER) private readonly logger: Logger,
+  ) {
     const connection = amqp.connect(process.env.RABBIT_MQ_URL);
     this.channelWrapper = connection.createChannel({
       setup: async (channel: Channel) => {
@@ -61,7 +65,7 @@ export class ProducerService {
   }
 
   public async sendToQueue(data: object, queue: BrokerQueue) {
-    this.logger.log(`sending message to queue: ${queue}`)
+    this.logger.log('info',`sending message to queue: ${queue}`)
     return await this.channelWrapper.sendToQueue(
       queue,
       Buffer.from(JSON.stringify(data)),

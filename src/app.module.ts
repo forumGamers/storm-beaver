@@ -5,6 +5,7 @@ import { config } from "dotenv";
 import { ProducerService } from "./services/broker.service";
 import { GraphqlController } from "./graphql/graphql.controller";
 import { PostModule } from "./module/post/post.module";
+import { UserModule } from "./module/user/user.module";
 
 config();
 
@@ -23,6 +24,7 @@ config();
       ],
     }),
     PostModule,
+    UserModule
   ],
   providers: [ProducerService],
   controllers: [GraphqlController],

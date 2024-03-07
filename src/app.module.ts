@@ -6,6 +6,7 @@ import { ProducerService } from "./services/broker.service";
 import { GraphqlController } from "./graphql/graphql.controller";
 import { PostModule } from "./module/post/post.module";
 import { UserModule } from "./module/user/user.module";
+import { ResolverModule } from "./graphql/resolvers/resolver.module";
 
 config();
 
@@ -24,7 +25,8 @@ config();
       ],
     }),
     PostModule,
-    UserModule
+    UserModule,
+    ResolverModule,
   ],
   providers: [ProducerService],
   controllers: [GraphqlController],

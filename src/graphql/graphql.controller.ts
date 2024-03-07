@@ -16,28 +16,39 @@ import {
 import {
   executeHTTPGraphQLRequest,
   Raw,
-  Request,
-  Response,
+  type Request,
+  type Response,
 } from '@node-libraries/nest-apollo-server';
-import schema from './graphql.schema';
 import type { GlobalContext } from '../interfaces';
 import parseReq from '../middlewares/parsingRequest.middleware';
 import { WINSTON_MODULE_PROVIDER } from 'nest-winston';
 import { Logger } from 'winston';
+import { makeExecutableSchema } from '@graphql-tools/schema';
+import { postTypeDefs } from './typedefs/post.typedefs';
+import { userTypeDefs } from './typedefs/user.typedefs';
+import { PostResolver } from './resolvers/post.resolver';
 
 @Controller()
 export class GraphqlController implements OnModuleDestroy, OnModuleInit {
   private apolloServer: ApolloServer;
   constructor(
     @Inject(WINSTON_MODULE_PROVIDER) private readonly logger: Logger,
+    private readonly postResolver: PostResolver,
   ) {}
+
+  private createSchema() {
+    return makeExecutableSchema({
+      typeDefs: [postTypeDefs, userTypeDefs],
+      resolvers: [this.postResolver.GenerateResolver()],
+    });
+  }
 
   public onModuleInit() {
     const logger = (msg: string) => {
       this.logger.info(`request : ${msg}`);
     };
     this.apolloServer = new ApolloServer<BaseContext>({
-      schema,
+      schema: this.createSchema(),
       introspection: process.env.NODE_ENV !== 'production',
       plugins: [
         {

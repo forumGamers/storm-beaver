@@ -4,14 +4,15 @@ import {
   credentials,
   type ServiceClientConstructor,
   Metadata,
+  type GrpcObject,
 } from '@grpc/grpc-js';
 import { loadSync } from '@grpc/proto-loader';
 import { join } from 'path';
-import { UserReadService } from '../../interfaces/user.interfaces';
+import type { GRPCUserReadService } from '../../interfaces/user.interfaces';
 
 @Injectable()
 export class UserService {
-  private client: UserReadService;
+  private client: GRPCUserReadService;
   constructor() {
     const UserService = (
       loadPackageDefinition(
@@ -22,13 +23,13 @@ export class UserService {
           defaults: true,
           oneofs: true,
         }),
-      ).user as any
+      ).user as GrpcObject
     ).UserService as ServiceClientConstructor;
 
     this.client = new UserService(
       process.env.USER_READ_GRPC_CLIENT ?? 'localhost:50050',
       credentials.createInsecure(),
-    ) as any;
+    ) as GRPCUserReadService;
   }
 
   public async getMultipleUsers(ids: string[], token: string) {

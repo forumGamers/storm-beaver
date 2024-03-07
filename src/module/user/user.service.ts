@@ -15,7 +15,7 @@ export class UserService {
   constructor() {
     const UserService = (
       loadPackageDefinition(
-        loadSync(join(__dirname, '../../proto/user.proto'), {
+        loadSync(join(__dirname, '../../proto/fire-cat/index.proto'), {
           keepCase: true,
           longs: String,
           enums: String,

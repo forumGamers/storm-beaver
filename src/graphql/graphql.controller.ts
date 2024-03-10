@@ -44,9 +44,6 @@ export class GraphqlController implements OnModuleDestroy, OnModuleInit {
   }
 
   public onModuleInit() {
-    const logger = (msg: string) => {
-      this.logger.info(`request : ${msg}`);
-    };
     this.apolloServer = new ApolloServer<BaseContext>({
       schema: this.createSchema(),
       introspection: process.env.NODE_ENV !== 'production',
@@ -57,7 +54,9 @@ export class GraphqlController implements OnModuleDestroy, OnModuleInit {
           ): Promise<GraphQLRequestListener<GlobalContext> | void> {
             const { request } = context;
             if (request.operationName !== 'IntrospectionQuery')
-              logger(`${request.http?.method}:${request.operationName}`);
+              this.logger.info(
+                `${request.http?.method}:${request.operationName}`,
+              );
             return {
               async didResolveOperation(
                 requestContext: GraphQLRequestContext<GlobalContext>,
@@ -69,6 +68,7 @@ export class GraphqlController implements OnModuleDestroy, OnModuleInit {
         },
       ],
     });
+    this.logger.info(`apollo server running...`)
     return this.apolloServer.start();
   }
 

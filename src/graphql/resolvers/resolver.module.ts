@@ -1,10 +1,10 @@
 import { Module } from "@nestjs/common";
 import { PostResolver } from "./post.resolver";
-import { PostService } from "../../module/post/post.service";
 import { UserService } from "../../module/user/user.service";
+import { NineTailsPostService } from "../../module/post/services/read.service";
 
 @Module({
-  providers: [PostResolver, PostService, UserService],
+  providers: [PostResolver, NineTailsPostService, UserService],
   exports: [PostResolver],
 })
 export class ResolverModule {}

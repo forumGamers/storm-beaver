@@ -10,6 +10,7 @@ export declare global {
       REDIS_USERNAME: string;
       USER_READ_GRPC_CLIENT: string;
       OCTO_CATS_GRPC_CLIENT: string;
+      NINE_TAILS_FOX_GRPC_CLIENT: string;
       NODE_ENV: "development" | "test" | "production";
     }
   }

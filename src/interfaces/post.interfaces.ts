@@ -8,7 +8,7 @@ export interface TimeLineParams {
   limit: string;
 }
 
-export interface GRPCPostService extends ServiceClient {
+export interface GRPCPostWriteService extends ServiceClient {
   CreatePost: (
     payload: PostForm,
     metadata: Metadata,
@@ -44,4 +44,110 @@ export interface PostForm {
   text: string;
   allowComment: boolean;
   privacy: string;
+}
+
+export interface PostDataParams {
+  userIds?: string;
+  page?: string;
+  limit?: string;
+}
+
+export interface GetPostParams {
+  page: number;
+  limit: number;
+  tags: string[];
+  userIds: string[];
+}
+
+export interface GRPCPostReadService extends ServiceClient {
+  GetPublicContent: (
+    payload: GetPostParams,
+    metadata: Metadata,
+    cb: CallBack<PostRespWithMetadata>
+  ) => void;
+  GetUserPost: (
+    payload: PaginationProps,
+    metadata: Metadata,
+    cb: CallBack<PostRespWithMetadata>
+  ) => void;
+  GetLikedPost: (
+    payload: PaginationProps,
+    metadata: Metadata,
+    cb: CallBack<PostRespWithMetadata>
+  ) => void;
+  GetUserMedia: (
+    payload: PaginationProps,
+    metadata: Metadata,
+    cb: CallBack<PostRespWithMetadata>
+  ) => void;
+  GetUserPostById: (
+    payload: PaginationPropsWithUserId,
+    metadata: Metadata,
+    cb: CallBack<PostRespWithMetadata>
+  ) => void;
+  GetMediaByUserId: (
+    payload: PaginationPropsWithUserId,
+    metadata: Metadata,
+    cb: CallBack<PostRespWithMetadata>
+  ) => void;
+  GetUserLikedPost: (
+    payload: PaginationPropsWithUserId,
+    metadata: Metadata,
+    cb: CallBack<PostRespWithMetadata>
+  ) => void;
+  GetTopTags: (
+    payload: PaginationProps,
+    metadata: Metadata,
+    cb: CallBack<TopTagsResp>
+  ) => void;
+}
+
+export interface PaginationProps {
+  page: number;
+  limit: number;
+}
+
+export interface PaginationPropsWithUserId extends PaginationProps {
+  userId: string;
+}
+
+export interface PostResponse {
+  _id: string;
+  userId: string;
+  text: string;
+  media: Media[];
+  allowComment: boolean;
+  createdAt: string;
+  updatedAr: string;
+  countLike: number;
+  countShare: number;
+  isLiked: boolean;
+  isShared: boolean;
+  tags: string[];
+  privacy: string;
+  totalData: number;
+}
+
+export interface Media {
+  id: string;
+  type: string;
+  url: string;
+}
+
+export interface PostRespWithMetadata {
+  totalData: number;
+  limit: number;
+  page: number;
+  totalPage: number;
+  data: PostResponse[];
+}
+
+export interface TopTag {
+  _id: string;
+  count: number;
+  posts: string[];
+}
+
+export interface TopTagsResp {
+  datas: TopTag[];
 }

@@ -17,7 +17,7 @@ export const redisProvider: Provider = {
     });
 
     redis.on('connect', () => {
-      console.log(new Date().toLocaleDateString() + ' connect to redis');
+      console.log(new Date().toISOString() + ' connect to redis');
     });
 
     redis.on('error', (err) => {

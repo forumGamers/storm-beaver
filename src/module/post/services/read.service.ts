@@ -167,20 +167,20 @@ export class NineTailsPostService {
     });
   }
 
-  public async GetTopTags(payload:PaginationProps,token:string) {
+  public async GetTopTags(payload: PaginationProps, token: string) {
     const metadata = new Metadata();
     metadata.add('access_token', token);
 
-    return new Promise<TopTagsResp>((resolve,reject) => {
-        this.client.GetTopTags(payload,metadata,(err,resp) => {
-            try {
-                if(err) throw err
+    return new Promise<TopTagsResp>((resolve, reject) => {
+      this.client.GetTopTags(payload, metadata, (err, resp) => {
+        try {
+          if (err) throw err;
 
-                resolve(resp)
-            } catch (err) {
-                reject(err)
-            }
-        })
-    })
+          resolve(resp);
+        } catch (err) {
+          reject(err);
+        }
+      });
+    });
   }
 }

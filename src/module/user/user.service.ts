@@ -8,7 +8,10 @@ import {
 } from '@grpc/grpc-js';
 import { loadSync } from '@grpc/proto-loader';
 import { join } from 'path';
-import type { GRPCUserReadService } from '../../interfaces/user.interfaces';
+import type {
+  GRPCUserReadService,
+  UserAttributes,
+} from '../../interfaces/user.interfaces';
 
 @Injectable()
 export class UserService {
@@ -36,7 +39,7 @@ export class UserService {
     const metadata = new Metadata();
     metadata.add('access_token', token);
 
-    return new Promise((resolve) => {
+    return new Promise<UserAttributes[]>((resolve) => {
       this.client.GetMultipleUser({ ids }, metadata, (err, response) => {
         resolve(err ? [] : response);
       });
@@ -47,7 +50,7 @@ export class UserService {
     const metadata = new Metadata();
     metadata.add('access_token', token);
 
-    return new Promise((resolve) => {
+    return new Promise<UserAttributes>((resolve) => {
       this.client.Me({}, metadata, (err, response) => {
         resolve(err ? null : response);
       });
@@ -58,7 +61,7 @@ export class UserService {
     const metadata = new Metadata();
     metadata.add('access_token', token);
 
-    return new Promise((resolve) => {
+    return new Promise<UserAttributes[]>((resolve) => {
       this.client.GetFollowingRecomendation({}, metadata, (err, response) => {
         resolve(err ? null : response);
       });
@@ -69,7 +72,7 @@ export class UserService {
     const metadata = new Metadata();
     metadata.add('access_token', token);
 
-    return new Promise((resolve) => {
+    return new Promise<UserAttributes>((resolve) => {
       this.client.GetUserById({ id }, metadata, (err, response) => {
         resolve(err ? null : response);
       });

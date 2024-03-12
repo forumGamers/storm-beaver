@@ -6,25 +6,25 @@ export interface GRPCUserReadService extends ServiceClient {
   GetMultipleUser: (
     payload: { ids: string[] },
     metadata: Metadata,
-    callBack: CallBack<User[]>
+    callBack: CallBack<UserAttributes[]>
   ) => void;
 
-  Me: (_: {}, metadata: Metadata, callBack: CallBack<User>) => void;
+  Me: (_: {}, metadata: Metadata, callBack: CallBack<UserAttributes>) => void;
 
   GetFollowingRecomendation: (
     _: {},
     metadata: Metadata,
-    callBack: CallBack<User[]>
+    callBack: CallBack<UserAttributes[]>
   ) => void;
 
   GetUserById: (
     payload: { id: string },
     metadata: Metadata,
-    callBack: CallBack<User>
+    callBack: CallBack<UserAttributes>
   ) => void;
 }
 
-export default interface User {
+export interface UserAttributes {
   id: string;
   fullname: string;
   username: string;

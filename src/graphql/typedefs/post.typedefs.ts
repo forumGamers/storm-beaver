@@ -18,9 +18,9 @@ export const postTypeDefs = `#graphql
   }
 
   input timeLineParams {
-    userIds: String
-    page: String
-    limit: String
+    userIds: [String]
+    page: Int
+    limit: Int
   }
 
   input Params {

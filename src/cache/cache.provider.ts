@@ -17,11 +17,11 @@ export const redisProvider: Provider = {
     });
 
     redis.on('connect', () => {
-      console.log(new Date().toISOString() + ' connect to redis');
+      console.info(new Date().toISOString() + ' info: connect to redis');
     });
 
     redis.on('error', (err) => {
-      console.log(`error on redis : ${err}`);
+      console.log(`${new Date().toISOString()} error: redis:${err}`);
     });
 
     return redis;

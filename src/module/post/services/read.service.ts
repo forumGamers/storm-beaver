@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, type OnModuleInit } from '@nestjs/common';
 import {
   loadPackageDefinition,
   credentials,
@@ -18,9 +18,10 @@ import type {
 } from '../../../interfaces/post.interfaces';
 
 @Injectable()
-export class NineTailsPostService {
+export class NineTailsPostService implements OnModuleInit {
   private client: GRPCPostReadService;
-  constructor() {
+
+  public onModuleInit() {
     const PostService = (
       loadPackageDefinition(
         loadSync(join(__dirname, '../../../proto/nine-tails-fox/post.proto'), {

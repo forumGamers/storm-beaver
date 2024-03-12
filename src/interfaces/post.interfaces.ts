@@ -47,9 +47,9 @@ export interface PostForm {
 }
 
 export interface PostDataParams {
-  userIds?: string;
-  page?: string;
-  limit?: string;
+  userIds?: string[];
+  page?: number;
+  limit?: number;
 }
 
 export interface GetPostParams {
